@@ -1,0 +1,36 @@
+<mat-card>
+    
+    <mat-card-content>
+        <button (click)='registerStaff()'>Register Staff</button>
+      <mat-card-title>Staff list</mat-card-title>
+    </mat-card-content>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sno</th>
+                <th>Full name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (item of list; track $index) {
+                <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.Sname}}</td>
+                    <td>{{item.Phone}}</td>
+                    <td>{{item.Address}}</td>
+                    <td>
+                        <button>Update</button> |
+                        <button>Delete</button>
+                    </td>
+                </tr>
+         
+        }
+        </tbody>
+      
+    </table>
+</mat-card>
+
+

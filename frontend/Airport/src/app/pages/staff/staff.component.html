@@ -1,0 +1,77 @@
+<<<<<<< HEAD
+<mat-card>
+    
+    <mat-card-content>
+        <button (click)='registerStaff()'>Register Staff</button>
+      <mat-card-title>Staff list</mat-card-title>
+    </mat-card-content>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sno</th>
+                <th>Full name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (item of list; track $index) {
+                <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.Sname}}</td>
+                    <td>{{item.Phone}}</td>
+                    <td>{{item.Address}}</td>
+                    <td>
+                        <button>Update</button> |
+                        <button>Delete</button>
+                    </td>
+                </tr>
+         
+        }
+        </tbody>
+      
+    </table>
+</mat-card>
+=======
+<!-- <matcard></matcard>
+    <mat-card-header>
+        <mat-card-title>Todos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content> -->
+        <!-- <button  mat-raised-button color="primary" (click)="addTodo()">Add Todos</button> -->
+
+        <table class="table " >
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Staff Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (item of list; track $index;) {
+        
+                        <tr>
+                            <td>{{$index+1}}</td>
+                            <td>{{item.title}}</td>
+                            <td>Completed</td>
+                            <td>
+                                <span><button mat-raised-button color="primary" (click)="updateStaff(item.Sid)" >Update</button></span>
+                             |  <span><button mat-raised-button color="warn" (click)="deleteStaff(item.Sid)">Delete</button></span>
+                            </td>
+                        </tr>
+                    
+                    
+                }@empty {
+                    <p>No record found </p>
+                }
+                
+            </tbody>
+        </table>
+    <!-- </mat-card-content>
+</mat-card> -->
+>>>>>>> 006747c25628b0c05618fc2fbab11453ce2f7ef7
