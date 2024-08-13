@@ -1,0 +1,70 @@
+<!-- <mat-card>
+    
+    <mat-card-content>
+        <button (click)='registerStaff()'>Register Staff</button>
+      <mat-card-title>Staff list</mat-card-title>
+    </mat-card-content>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sno</th>
+                <th>Full name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (item of list; track $index) {
+                <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.Sname}}</td>
+                    <td>{{item.Phone}}</td>
+                    <td>{{item.Address}}</td>
+                    <td>
+                        <button>Update</button> |
+                        <button>Delete</button>
+                    </td>
+                </tr>
+         
+        }
+        </tbody>
+      
+    </table>
+</mat-card>
+
+ -->
+
+ <h1>i can work when no content only hhhhh!!!</h1>
+
+ <table class="mat-elevation-z8">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Full name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Ali</td>
+            <td>KWao</td>
+            <td>0778654321</td>
+            <td><button>update</button></td>
+        </tr>
+        @for (item of data; track $index ){
+            <tr>
+                <td>{{$index+1}} </td>
+                <td>{{item.name}}</td>
+                <td>{{item.address}}</td>
+                <td>{{item.phone}}</td>
+                <td><button>update</button></td>
+            </tr>
+        }
+    </tbody>
+  </table>
+  
+  

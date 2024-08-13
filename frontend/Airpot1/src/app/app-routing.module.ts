@@ -4,15 +4,19 @@ import { DashbordComponent } from './pages/dashbord/dashbord.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { StaffListComponent } from './pages/staff-list/staff-list.component';
 import { RegisterStaffComponent } from './pages/register-staff/register-staff.component';
+import { ListstaffComponent } from './pages/liststaff/liststaff.component';
 
-const routes: Routes = [{
+const routes: Routes = [
+  {
   path: '',component:MainLayoutComponent,
   children: [
     {path: 'dashbord',component:DashbordComponent},
     {path: 'staffList', component:StaffListComponent},
-    {path: 'registerStaff', component:RegisterStaffComponent}
+    {path: 'registerStaff', component:RegisterStaffComponent},
+    {path:'liststaff',component:ListstaffComponent}
   ]
-}];
+}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

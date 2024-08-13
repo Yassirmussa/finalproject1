@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ListstaffComponent } from './pages/liststaff/liststaff.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MainLayoutComponent,
     DashbordComponent,
     StaffListComponent,
-    RegisterStaffComponent
+    RegisterStaffComponent,
+    ListstaffComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,39 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    {% load static %}
+    
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    {% comment %} <script src="{% static 'js/pieChart.js' %}"></script> {% endcomment %}
+</head>
+<body>
+    <!-- Sidebar Menu -->
+    <div class="menu">
+        <h2>Menu</h2>
+        <a href="{% url 'index' %}">Dashboard</a>
+        <a href="{% url 'stafflist' %}">Staff</a>
+        <a href="{% url 'staffregistration'%}">Register Staff</a>
+        {% comment %} <a href="{% url 'allocation' %}">Allocation</a> {% endcomment %}
+        <a href="{% url 'workdays' %}">Work Days</a> 
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <!-- Horizontal Bar with Welcome Message -->
+        <div class="horizontal-bar">
+            <div class="welcome">Welcome, Someone!</div>
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+    <!-- Bootstrap Bundle with Popper (JS) -->
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

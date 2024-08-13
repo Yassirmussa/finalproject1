@@ -13,16 +13,17 @@ export class StaffListComponent {
   list: any;
   
     ngOnInit(): void {
-      this.getstaff();
+      // this.getstaff();
       
     }
   
-    getstaff(){
-      this.staff.getAll().subscribe((data:any)=>{
-        this.list = data;
-        console.table(this.list);
-      })
-    }
+    // getstaff(){
+    //   this.staff.getAll().subscribe((data:any)=>{
+    //     this.list = data;
+    //     console.table(this.list);
+    //   })
+    // }
+    
 registerStaff() {
   return this.router.navigateByUrl('registerStaff')
 
