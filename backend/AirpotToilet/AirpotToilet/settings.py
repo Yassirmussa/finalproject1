@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'logic',
     'rest_framework',
-    'pages'
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +138,5 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",  # or other domains as needed
 ]
 CORS_ALLOW_ALL_ORIGINS = True
+
+# AUTH_USER_MODEL= 'pages.User'
