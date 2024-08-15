@@ -72,7 +72,7 @@ def updateFeedback(request, Fid):
 @api_view(['DELETE'])
 def deleteFeedback(request, Fid):
     try:
-        staff = Staff.objects.get(Fid = Fid)
+        staff = Feedback.objects.get(Fid = Fid)
         staff.delete()
         return Response("Deleted Sucessifully", status=200)
     except:

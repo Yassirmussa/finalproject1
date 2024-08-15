@@ -3,122 +3,73 @@
 {% block title %}Index Page{% endblock %}
 
 {% block content %}
-<h1>Main Content</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula cursus nunc, et consequat metus consectetur ac.</p>
-<p>Integer sit amet purus nec risus egestas euismod. Fusce ac nisi ac libero tincidunt venenatis at ac turpis.</p>
-<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur ut nisi et lorem bibendum suscipit.</p>
-<p>... (more content) ...</p>
+  <h2>Pie chart shows user's Feedback</h2>
+  <div style="width: 30%; margin: 0 auto;">
+    <canvas id="pieChart" width="200" height="200"></canvas>
+  </div>
 
-<h2>Pie chart shows user's Feedback</h2>
-<canvas id="pieChart" width="400" height="400"></canvas>
+  <h2>Histogram shows user's Feedback</h2>
+  <div style="width: 30%; margin: 0 auto; margin-top: 20px;">
+    <canvas id="histogram" width="200" height="150"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Fetch data from API endpoint
+    fetch('http://localhost:8000/api/getfeedback')
+      .then(response => response.json())
+      .then(data => {
+        // Process data to get counts for each value
+        const goodCount = data.filter(item => item.Value === 'good').length;
+        const poorCount = data.filter(item => item.Value === 'poor').length;
+
+        // Create pie chart
+        var ctxPie = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctxPie, {
+          type: 'pie',
+          data: {
+            labels: ['Good', 'Poor'],
+            datasets: [{
+              data: [goodCount, poorCount],
+              backgroundColor: ['green', 'red']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            legend: {
+              display: false
+            }
+          }
+        });
+
+        // Create histogram
+        var ctxHistogram = document.getElementById('histogram').getContext('2d');
+        var histogram = new Chart(ctxHistogram, {
+          type: 'bar',
+          data: {
+            labels: ['Good', 'Poor'],
+            datasets: [{
+              data: [goodCount, poorCount],
+              backgroundColor: ['green', 'red']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            legend: {
+              display: false
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
 {% endblock %}
-
-
-
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
-     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    
-    <script src="{% static 'js/pieChart.js' %}"></script>
-    <!-- <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-        }
-
-        /* Sidebar menu */
-        .menu {
-            width: 200px;
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .menu a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .menu a:hover {
-            background-color: #575757;
-        }
-
-        /* Content area */
-        .content {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        /* Horizontal div inside content */
-        .horizontal-bar {
-            width: 100%;
-            height: 50px;
-            background-color: #f4f4f4;
-            position: relative;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-
-        /* Welcome message */
-        .welcome {
-            position: absolute;
-            right: 15px;
-            font-size: 18px;
-            color: #333;
-        }
-
-        /* Content styling */
-        .content p {
-            margin-bottom: 20px;
-        }
-    </style> -->
-</head>
-<body>
-
-    <!-- Sidebar Menu -->
-    <div class="menu">
-        <h2>Menu</h2>
-        <a href="">Dashboard</a>
-        <a href="stafflist">Staff</a>
-        <a href="#">Allocation</a>
-        <a href="#">Work Days</a>
-    </div>
-
-    <!-- Main Content Area -->
-    <div class="content">
-        <!-- Horizontal Bar with Welcome Message -->
-        <div class="horizontal-bar">
-            <div class="welcome">Welcome, Someone!</div>
-        </div>
-
-        <h1>Main Content</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula cursus nunc, et consequat metus consectetur ac.</p>
-        <p>Integer sit amet purus nec risus egestas euismod. Fusce ac nisi ac libero tincidunt venenatis at ac turpis.</p>
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur ut nisi et lorem bibendum suscipit.</p>
-        <p>... (more content) ...</p>
-
-        <h2>Pie chart shows user's Feedback</h2>
-    <canvas id="pieChart" width="400" height="400"></canvas>
-    </div>
-    
-</div>
-
-<script src="{% static 'js/pieChart.js' %}"></script>
-
-</body>
-</html> {% endcomment %}

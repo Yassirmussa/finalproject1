@@ -38,3 +38,4 @@ class Feedback(models.Model):
     Fid = models.AutoField(primary_key=True)
     Value = models.CharField(max_length=10, choices=value_choice)
     Aid = models.ForeignKey(Allocation, on_delete=models.CASCADE, blank=True)
+    Date = models.DateField(auto_now_add=True)

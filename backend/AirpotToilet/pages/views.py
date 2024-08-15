@@ -10,8 +10,19 @@ def index(request):
 def stafflist(request):
     return render(request, 'stafflist.html')
 
+def registerStaff(request):
+    return render(request, 'registerStaff.html')
+
+def updateStaff(request, Sid):
+    return render(request, 'updatestaff.html')
+
 def workdays(request):
     return render(request, 'workdays.html')
 
-def registerStaff(request):
-    return render(request, 'registerStaff.html')
+
+
+def getFeedback(request):
+    return render(request, 'getFeedback.html')
+
+def getAllocation(request):
+    return render(request, 'getAllocation.html')

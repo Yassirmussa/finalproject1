@@ -5,7 +5,9 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">Staff List</h1>
-    <!-- <button id="registerstaff" class="btn btn-primary">Register Staff</button> -->
+    <div class="table-actions">
+        <button class="btn btn-primary float-right" onclick="registerStaff()">Register Staff</button>
+    </div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -21,42 +23,62 @@
         </tbody>
     </table>
 </div>
+
 <script>
-    console.log('Script is running');
-    
     document.addEventListener('DOMContentLoaded', function () {
-        console.log('DOM fully loaded and parsed');
-        
-        fetch('http://localhost:8000/api/getstaff')
-            .then(response => {
-                console.log('Response status:', response.status);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Parsed JSON:', data);
+        loadStaffList(); // Load staff list when the page loads
 
-                const staffList = document.getElementById('staff-list');
-                staffList.innerHTML = '';
+        function loadStaffList() {
+            fetch('http://localhost:8000/api/getstaff')
+                .then(response => response.json())
+                .then(data => {
+                    const staffList = document.getElementById('staff-list');
+                    staffList.innerHTML = ''; // Clear existing list
+                    data.forEach((staff, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${staff.Sname}</td>
+                            <td>${staff.Phone}</td>
+                            <td>${staff.Address}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" Sid="${staff.Sid}" onclick="editStaff(${staff.Sid})">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteStaff(${staff.Sid})">Delete</button>
+                            </td>
+                        `;
+                        staffList.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching staff data:', error));
+        }
 
-                data.forEach((staff, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td>${staff.Sname}</td>
-                        <td>${staff.Phone}</td>
-                        <td>${staff.Address}</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                        </td>
-                    `;
-                    staffList.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching staff data:', error));
+        window.editStaff = function(staffId) {
+            // Redirect to the edit page with the staff ID in the URL
+            window.location.href = `/editstaff/${staffId}`;
+        }
+
+        window.deleteStaff = function(staffId) {
+            if (confirm('Are you sure you want to delete this staff member?')) {
+                fetch(`http://localhost:8000/api/deletestaff/${staffId}/`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    alert(`Staff member deleted successfully`);
+                    loadStaffList(); // Reload the staff list after deletion
+                })
+                .catch(error => console.error('Error deleting staff data:', error));
+            }
+        }
     });
+
+    function registerStaff(){
+        window.location.href = '/registerstaff/'
+    }
 </script>
 {% endblock %}

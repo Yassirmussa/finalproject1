@@ -9,9 +9,14 @@ class StaffSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DaySerializer(serializers.ModelSerializer):
+    Dayname = serializers.SerializerMethodField()
     class Meta:
         model = Day
         fields = '__all__'
+
+    def get_Dayname(self, obj):
+        return obj.get_Day_display()  # This will use the DAY_CHOICES to return the corresponding day name
+    
 
 
 class AllocationSerializer(serializers.ModelSerializer):
