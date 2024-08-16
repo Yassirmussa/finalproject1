@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Registration{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Staff Registration</h1>
+    <form id="registrationForm">
+        <div class="mb-3">
+            <label for="staffName" class="form-label">Staff Name</label>
+            <input type="text" class="form-control" id="staffName" placeholder="Yassir Mussa Juma" required>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="0773788543" required>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Muungoni" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('registrationForm');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form data
+            const staffName = document.getElementById('staffName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const address = document.getElementById('address').value;
+
+            // Create the data object
+            const data = {
+                Sname: staffName,
+                Phone: phoneNumber,
+                Address: address
+            };
+
+            // Send data to the API
+            fetch('http://localhost:8000/api/insertstaff', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+                alert('Staff registered successfully!');
+                form.reset(); // Clear the form after successful submission
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to register staff.');
+            });
+        });
+    });
+</script>
+
+{% endblock %}
