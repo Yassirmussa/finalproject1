@@ -1,7 +1,0 @@
-{% extends 'base.html' %}
-
-{% block title %}Workdays Page{% endblock %}
-
-{% block content %}
-<h1>hello from workdays</h1>
-{% endblock %}
