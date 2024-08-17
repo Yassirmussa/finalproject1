@@ -5,6 +5,7 @@ urlpatterns = [
     # STAFF API's
     path('insertstaff', views.createStaff),
     path('getstaff', views.getStaff),
+    path('getstaffbyid/<Sid>/', views.getstaffByid),
     path('updatestaff/<Sid>/', views.updateStaff),
     path('deletestaff/<Sid>/', views.deleteStaff),
 

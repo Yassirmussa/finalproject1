@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -20,6 +21,16 @@ def getStaff(request):
     serializer = StaffSerializer(staff, many=True)
     return Response(serializer.data, status=200)
 
+@api_view(['GET'])
+def getstaffByid(request, Sid):
+    # try:
+    staff = Staff.objects.get(Sid = Sid)
+    serializer = StaffSerializer(staff)
+    return Response(serializer.data, status=200)
+    # except:
+    #     return Response('Staff does not exist')
+
+
 @api_view(['PUT'])
 def updateStaff(request, Sid):
     try:
@@ -36,8 +47,11 @@ def updateStaff(request, Sid):
 def deleteStaff(request, Sid):
     try:
         staff = Staff.objects.get(Sid = Sid)
-        staff.delete()
-        return Response("Deleted Sucessifully", status=200)
+        if Allocation.objects.filter(Sid = Sid).exists():
+            return Response('This staff is allocated to working day, Pleas allocation first', status=400)
+        else: 
+            staff.delete()
+            return Response("Deleted Sucessifully", status=200)
     except:
         return Response(f' staff {Sid} does not exist')
     

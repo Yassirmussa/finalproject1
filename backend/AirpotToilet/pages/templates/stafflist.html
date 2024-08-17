@@ -32,6 +32,7 @@
             fetch('http://localhost:8000/api/getstaff')
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     const staffList = document.getElementById('staff-list');
                     staffList.innerHTML = ''; // Clear existing list
                     data.forEach((staff, index) => {
@@ -64,17 +65,20 @@
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        return response.json().then(data => { throw new Error(data.error); });
                     }
                     return response.json();
                 })
                 .then(() => {
-                    alert(`Staff member deleted successfully`);
+                    alert('Staff member deleted successfully');
                     loadStaffList(); // Reload the staff list after deletion
                 })
-                .catch(error => console.error('Error deleting staff data:', error));
+                .catch(error => {
+                    alert(`Error: This supervisor is allocated to a working day`);
+                });
             }
-        }
+        };
+        
     });
 
     function registerStaff(){

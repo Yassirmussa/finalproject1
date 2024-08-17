@@ -1,8 +1,73 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block title %} Update Staff Information {% endblock %}
 
+{% block content %}
+    <h3>Update Staff</h3>
+    <form id="updateForm">
+        <div class="mb-3">
+            <label for="staffName" class="form-label">Staff Name</label>
+            <input type="text" class="form-control" id="staffName" required>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber" required>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
 
-{% block content%}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Step 2: Extract the staff ID from the URL
+            const pathArray = window.location.pathname.split('/');
+            const staffId = pathArray[pathArray.length - 2]; // Extract the ID directly from the URL
 
+            console.log('Staff ID:', staffId); // For debugging purposes
+
+            // Step 3: Fetch the staff data by ID
+            fetch(`http://localhost:8000/api/getstaffbyid/${staffId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Step 4: Populate the form fields with the data
+                    document.getElementById('staffName').value = data.Sname;
+                    document.getElementById('phoneNumber').value = data.Phone;
+                    document.getElementById('address').value = data.Address;
+                })
+                .catch(error => console.error('Error fetching staff data:', error));
+
+            // Step 5: Handle form submission to update the staff data
+            document.getElementById('updateForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+                
+                const staffData = {
+                    Sname: document.getElementById('staffName').value,
+                    Phone: document.getElementById('phoneNumber').value,
+                    Address: document.getElementById('address').value
+                };
+
+                fetch(`http://localhost:8000/api/updatestaff/${staffId}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(staffData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    alert('Staff updated successfully');
+                    window.location.href = '/stafflist'; // Redirect to staff list page after success
+                })
+                .catch(error => console.error('Error updating staff data:', error));
+            });
+        });
+    </script>
 {% endblock %}
