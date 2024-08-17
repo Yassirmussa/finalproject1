@@ -25,8 +25,8 @@ class Day(models.Model):
 
 class Allocation(models.Model):
     Aid = models.AutoField(primary_key=True)
-    Sid = models.ForeignKey(Staff, on_delete = models.CASCADE)
-    Did = models.OneToOneField(Day, on_delete = models.CASCADE)
+    Sid = models.ForeignKey(Staff, on_delete = models.PROTECT)
+    Did = models.OneToOneField(Day, on_delete = models.PROTECT)
 
 
 class Feedback(models.Model):
@@ -37,5 +37,5 @@ class Feedback(models.Model):
 
     Fid = models.AutoField(primary_key=True)
     Value = models.CharField(max_length=10, choices=value_choice)
-    Aid = models.ForeignKey(Allocation, on_delete=models.CASCADE, blank=True)
+    Aid = models.ForeignKey(Allocation, on_delete=models.PROTECT, blank=True)
     Date = models.DateField(auto_now_add=True)
