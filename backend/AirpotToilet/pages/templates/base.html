@@ -45,7 +45,7 @@
     <a href="{% url 'stafflist' %}"><i class="fas fa-users"></i> Staff</a>
     <a href="{% url 'staffregistration'%}"><i class="fas fa-user-plus"></i> Register Staff</a>
     <!-- <a href="{% url 'allocation' %}"><i class="fas fa-calendar"></i> Allocation</a> -->
-    <a href="{% url 'workdays' %}"><i class="fas fa-calendar-day"></i> Work Days</a> 
+    <a href="{% url 'registration' %}"><i class="fas fa-user-plus"></i> Register user</a> 
     <a href="{% url 'user-feedback' %}"><i class="fas fa-comment"></i> Feedback</a>
     <a href="{% url 'allocation' %}"><i class="fas fa-calendar"></i> Allocation</a>
 </div>
@@ -54,9 +54,15 @@
     <div class="content">
         <!-- Horizontal Bar with Welcome Message -->
         <div class="horizontal-bar">
-            <div class="welcome">Welcome, Someone!</div>
+            {% if user.is_authenticated %}
+            <div class="welcome">Welcome, {{user.email}}
+               
+            </div>
+             <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% endif %}
+            
         </div>
-
+ 
         {% block content %}{% endblock %}
     </div>
     <!-- Bootstrap Bundle with Popper (JS) -->

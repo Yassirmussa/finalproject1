@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib import response
 from django.shortcuts import render
 from rest_framework.decorators import api_view
@@ -48,7 +49,7 @@ def deleteStaff(request, Sid):
     try:
         staff = Staff.objects.get(Sid = Sid)
         if Allocation.objects.filter(Sid = Sid).exists():
-            return Response('This staff is allocated to working day, Pleas allocation first', status=400)
+            return Response('This staff is allocated to working day, Please delete allocation first', status=400)
         else: 
             staff.delete()
             return Response("Deleted Sucessifully", status=200)
@@ -70,6 +71,34 @@ def getFeedback(request):
     feedback = Feedback.objects.all()
     serializer = FeedbackSerializer(feedback, many=True)
     return Response(serializer.data, status=200)
+
+# GET FEEDBACK BY STAFF NAME
+@api_view(['GET'])
+def getFeedbackbyStaff(request, Sname):
+    feedback = Feedback.objects.filter(Aid__Sid__Sname = Sname)
+    serializer = FeedbackSerializer(feedback, many=True)
+    return Response(serializer.data)
+
+# GET FEEDBACK BY DATE
+@api_view(['GET'])
+def getfeedbackbyDate(request, Date):
+    feedback = Feedback.objects.filter(Date = Date)
+    serializer = FeedbackSerializer(feedback, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def getFeedbackvalue(request):
+    feedbacks = Feedback.objects.all()
+    # print(feedbacks.count())
+    good = 0
+    poor = 0
+    for feedback in feedbacks:
+        if feedback.Value == 'good':
+            good +=1
+        elif feedback.Value == 'poor':
+            poor+=1
+    serializer = FeedbackSerializer(feedbacks, many=True)
+    return Response({'msg':'Here is the general rates', 'good':good, 'poor':poor})
 
 @api_view(['PUT'])
 def updateFeedback(request, Fid):

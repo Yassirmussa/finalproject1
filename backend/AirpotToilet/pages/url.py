@@ -4,8 +4,9 @@ from . import views
 
 urlpatterns = [
     
-    path('login', views.login),
-    path('register', views.register),
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
+    path('register', views.register, name='registration'),
     
     path('', views.index, name='index'),
     
@@ -17,5 +18,6 @@ urlpatterns = [
     
     path('getfeedback/', views.getFeedback, name='user-feedback'),
     
-    path('getallocation', views.getAllocation, name='allocation')
+    path('getallocation', views.getAllocation, name='allocation'),
+    path('updateallocation/<int:Aid>/', views.updateAllocation, name='edit_allocation'),
 ]

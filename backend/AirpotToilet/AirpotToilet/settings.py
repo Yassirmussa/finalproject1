@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'pages.User'
+
 
 # Application definition
 
@@ -140,3 +142,5 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 # AUTH_USER_MODEL= 'pages.User'
+
+LOGIN_URL = 'login'

@@ -74,9 +74,10 @@
   <div class="login-container">
     <h2>Login</h2>
     <form action=" " method="POST">
+      {% csrf_token %}
       <div class="input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
       </div>
       <div class="input-group">
         <label for="password">Password</label>
@@ -84,6 +85,12 @@
       </div>
       <button type="submit">Login</button>
     </form>
+    <!-- <a href="{% url 'registration' %}"><i class="fas fa-user-plus"></i> Register user</a>  -->
+    <div class='message'>
+      {% for message in messages %}
+        <h3 style="color: red;">{{message}}</h3>
+      {% endfor %}
+    </div>
   </div>
 </body>
 </html>

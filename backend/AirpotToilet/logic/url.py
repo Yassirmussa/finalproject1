@@ -12,6 +12,11 @@ urlpatterns = [
     # FEEDBACK API's
     path('insertfeedback', views.createFeedback),
     path('getfeedback', views.getFeedback),
+    # get by STAFF NAME
+    path('getbystaff/<Sname>/', views.getFeedbackbyStaff),
+    # gett by date
+    path('getfeedbackbydate/<Date>/', views.getfeedbackbyDate),
+    path('getfeebackvalue', views.getFeedbackvalue),
     path('updatefeedback/<Fid>/', views.updateFeedback),
     path('deletefeedback/<Fid>/', views.deleteFeedback),
 
