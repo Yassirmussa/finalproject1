@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+ 
+{% block title %} Staff Allocation {% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Staff Allocation</h1>
+    <form id="allocation">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="staff">Staff Name</label>
+            <select id="staff" class="form-control" required>
+                <option value="" disabled selected>Select Staff</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="day">Work Day</label>
+            <select id="day" class="form-control" required>
+                <option value="" disabled selected>Select Work Day</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+
+<script>
+    // Fetch staff data
+    fetch('http://127.0.0.1:8000/api/getstaff')
+        .then(response => response.json())
+        .then(data => {
+            const staffSelect = document.getElementById('staff');
+            data.forEach(staff => {
+                const option = document.createElement('option');
+                option.value = staff.Sid;
+                option.textContent = staff.Sname;
+                staffSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching staff data:', error));
+
+    // Fetch day data
+    fetch('http://127.0.0.1:8000/api/getday')
+        .then(response => response.json())
+        .then(data => {
+            const daySelect = document.getElementById('day');
+            data.forEach(day => {
+                const option = document.createElement('option');
+                option.value = day.Did;
+                option.textContent = day.Dayname;
+                daySelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching day data:', error));
+
+
+
+    // Handle form submission
+    document.getElementById('allocation').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const staffId = document.getElementById('staff').value;
+        const dayId = document.getElementById('day').value;
+        
+        const payload = {
+            Sid: staffId,
+            Did: dayId
+        };
+
+        fetch('http://127.0.0.1:8000/api/insertallocation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            // Check for successful status code
+            if (response.status === 201) {
+                return response.json();
+            } else {
+                throw new Error('Failed to allocate staff.');
+            }
+        })
+        .then(data => {
+            alert('Staff allocated successful!');
+            console.log('Staff allocated successful',data)
+        })
+        .catch(error => {
+            alert('Failed to allocate staff. Please check your input.');
+            console.error('Error:', error);
+        });
+});
+
+
+</script>
+{% endblock %}

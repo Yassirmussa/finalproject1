@@ -18,6 +18,8 @@ urlpatterns = [
     
     path('getfeedback/', views.getFeedback, name='user-feedback'),
     
+    path('allocate/', views.allocate, name='allocate'),
+    
     path('getallocation', views.getAllocation, name='allocation'),
     path('updateallocation/<int:Aid>/', views.updateAllocation, name='edit_allocation'),
 ]

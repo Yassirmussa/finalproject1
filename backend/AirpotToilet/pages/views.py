@@ -104,6 +104,9 @@ def workdays(request):
 @login_required()
 def getFeedback(request):
     return render(request, 'getFeedback.html')
+@login_required()
+def allocate(request):
+    return render(request, 'allocate.html')
 
 @login_required()
 def getAllocation(request):
